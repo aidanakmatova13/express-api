@@ -51,7 +51,7 @@ server.post('/api/tasks/:category', (req, res) => {
 
 server.delete('/api/tasks/:category/:id', (req, res) => {
     const data = readData(req.params.category)
-    const updatedTasks = data.map(el => el.taskId === req.params.id ? {...el, _isDeleted: true} : el)
+    const updatedTasks = data.map(el => el.taskId === req.params.id ? {...el, _isDeleted: true, _deletedAt: +new Date()} : el)
     fs.writeFileSync(`./tasks/${req.params.category}.json`, JSON.stringify(updatedTasks, null, 2))
     res.json(updatedTasks)
 })
@@ -71,10 +71,10 @@ server.patch('/api/tasks/:category/:id', (req, res) => {
 server.get('/api/tasks/:category/:timespan', (req, res) => {
     const data = readData(req.params.category)
     const duration = {
-        "day": 1000*60*60*24,
-        "week": 1000*60*60*24*7,
-        "month": 1000*60*60*24*7*30,
-        "year": 1000*60*60*24*365
+        "day": 1000 * 60 * 60 * 24,
+        "week": 1000 * 60 * 60 * 24 * 7,
+        "month": 1000 * 60 * 60 * 24 * 7 * 30,
+        "year": 1000 * 60 * 60 * 24 * 365
     }
     const filteredData = data.filter(el => +new Date() - el._createdAt < duration[req.params.timespan])
     res.json(filteredData)
