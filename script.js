@@ -14,7 +14,7 @@ const readData = (fileName) => {
     }
 }
 
-server.get('/api/tasks/:category', (req, res) => {
+server.get('/api/tasks/', (req, res) => {
     const data = readData(req.params.category)
     const filteredData = data
         .filter(el => !el._isDeleted)
@@ -51,7 +51,11 @@ server.post('/api/tasks/:category', (req, res) => {
 
 server.delete('/api/tasks/:category/:id', (req, res) => {
     const data = readData(req.params.category)
-    const updatedTasks = data.map(el => el.taskId === req.params.id ? {...el, _isDeleted: true, _deletedAt: +new Date()} : el)
+    const updatedTasks = data.map(el => el.taskId === req.params.id ? {
+        ...el,
+        _isDeleted: true,
+        _deletedAt: +new Date()
+    } : el)
     fs.writeFileSync(`./tasks/${req.params.category}.json`, JSON.stringify(updatedTasks, null, 2))
     res.json(updatedTasks)
 })
