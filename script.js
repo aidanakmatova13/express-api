@@ -46,14 +46,14 @@ server.post('/api/tasks/:category', (req, res) => {
     const data = readData(req.params.category)
     const updatedTasks = [...data, newTask]
     fs.writeFileSync(`./tasks/${req.params.category}.json`, JSON.stringify(updatedTasks, null, 2))
-    res.json({status: "successfully"})
+    res.json(newTask)
 })
 
 server.delete('/api/tasks/:category/:id', (req, res) => {
     const data = readData(req.params.category)
     const updatedTasks = data.map(el => el.taskId === req.params.id ? {...el, _isDeleted: true} : el)
     fs.writeFileSync(`./tasks/${req.params.category}.json`, JSON.stringify(updatedTasks, null, 2))
-    res.json({status: "successfully"})
+    res.json(updatedTasks)
 })
 
 server.patch('/api/tasks/:category/:id', (req, res) => {
@@ -62,7 +62,7 @@ server.patch('/api/tasks/:category/:id', (req, res) => {
         const data = readData(req.params.category)
         const updatedTasks = data.map(el => el.taskId === req.params.id ? {...el, status: req.body.status} : el)
         fs.writeFileSync(`./tasks/${req.params.category}.json`, JSON.stringify(updatedTasks, null, 2))
-        res.json({status: "successfully"})
+        res.json(updatedTasks)
     } else {
         res.status(501).json({'status': "error", 'message': "incorrect status"})
     }
