@@ -1,0 +1,10 @@
+[
+  {
+    "taskId": "cs",
+    "title": "Бегать по утрам",
+    "_isDeleted": true,
+    "_createdAt": 1634522790926,
+    "_deletedAt": null,
+    "status": "done"
+  }
+]
