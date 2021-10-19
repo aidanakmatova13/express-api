@@ -19,10 +19,6 @@ const getAllTasks = (req, res) => {
                 title: el.title,
                 body: el.body
             }
-            // delete el._isDeleted
-            // delete el._deletedAt
-            // delete el._createdAt
-            // return el
         })
     res.json(filteredData)
 }
