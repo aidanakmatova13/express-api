@@ -3,9 +3,9 @@ const {getAllTasks, getByTime, addTask, deleteTask, updateTask} = require("../co
 const router = express.Router()
 
 router.get('/', getAllTasks)
-router.get('/:category/:timespan', getByTime)
-router.post('/:category', addTask)
-router.delete('/:category/:id', deleteTask)
-router.patch('/:category/:id', updateTask)
+router.get('/:timespan', getByTime)
+router.post('/', addTask)
+router.delete('/:id', deleteTask)
+router.patch('/:id', updateTask)
 
 module.exports = router
