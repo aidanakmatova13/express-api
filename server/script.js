@@ -23,7 +23,7 @@ server.use(cors()) //для порта
 
 
 //РОУТЫ, КОТОРЫЕ НАЧИНАЮТСЯ С /api/tasks middleware
-server.use("./api/tasks", taskRouter)
+server.use("/api/tasks", taskRouter)
 
 
 //ЕСЛИ НИ ОДИН РОУТ НЕ ПОДОШЕЛ ТО ВЫВОДИМ 404

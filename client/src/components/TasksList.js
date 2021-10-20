@@ -12,7 +12,7 @@ const TasksList = () => {
             <ul className="list-group">
                 {
                     tasks.map(el =>
-                        <li className="list-group-item">{el.title}</li>
+                        <li key={el.id} className="list-group-item">{el.title}</li>
                     )
                 }
             </ul>
