@@ -6,6 +6,7 @@ const cors = require('cors')
 require('dotenv').config()  //импортируем dotenv
 
 
+
 //СОЗДАЛИ СЕРВЕР
 const server = express()
 
@@ -18,7 +19,7 @@ mongoose.connect(process.env.MONGO_URL)
 
 //ОБРАБОТКА ДАННЫХ В REQ.BODY
 server.use(express.json()) //middleware
-server.use(cors())
+server.use(cors()) //для порта
 
 
 //РОУТЫ, КОТОРЫЕ НАЧИНАЮТСЯ С /api/tasks middleware
