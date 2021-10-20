@@ -1,20 +1,16 @@
 const {nanoid} = require('nanoid')
 const fs = require('fs')
 
-const readData = () => {
+const readData = (fileName) => {
     try {
-        return JSON.parse(fs.readFileSync(`./tasks/shop.json`, 'utf8'))
+        return JSON.parse(fs.readFileSync(`./tasks/${fileName}.json`, 'utf8'))
     } catch (e) {
         return []
     }
 }
 
-const writeData = (data) => {
-     fs.writeFileSync('./tasks/shop.json', JSON.stringify(data, null,2))
-}
-
 const getAllTasks = (req, res) => {
-    const data = readData()
+    const data = readData(req.params.category)
     const filteredData = data
         .filter(el => !el._isDeleted)
         .map(el => {
@@ -27,7 +23,7 @@ const getAllTasks = (req, res) => {
     res.json(filteredData)
 }
 const getByTime = (req, res) => {
-    const data = readData()
+    const data = readData(req.params.category)
     const duration = {
         "day": 1000 * 60 * 60 * 24,
         "week": 1000 * 60 * 60 * 24 * 7,
@@ -38,6 +34,8 @@ const getByTime = (req, res) => {
     res.json(filteredData)
 }
 const addTask = (req, res) => {
+    // console.log(req.params.category)
+    // console.log(req.body)
     const newTask = {
         "taskId": nanoid(2),
         "title": req.body.title,
@@ -46,27 +44,27 @@ const addTask = (req, res) => {
         "_createdAt": +new Date(),
         "_deletedAt": null
     }
-    const data = readData()
+    const data = readData(req.params.category)
     const updatedTasks = [...data, newTask]
-    writeData(updatedTasks)
+    fs.writeFileSync(`./tasks/${req.params.category}.json`, JSON.stringify(updatedTasks, null, 2))
     res.json(newTask)
 }
 const deleteTask = (req, res) => {
-    const data = readData()
+    const data = readData(req.params.category)
     const updatedTasks = data.map(el => el.taskId === req.params.id ? {
         ...el,
         _isDeleted: true,
         _deletedAt: +new Date()
     } : el)
-    writeData(updatedTasks)
+    fs.writeFileSync(`./tasks/${req.params.category}.json`, JSON.stringify(updatedTasks, null, 2))
     res.json(updatedTasks)
 }
 const updateTask = (req, res) => {
     const statuses = ['new', 'in progress', 'done', 'blocked']
     if (statuses.includes(req.body.status)) {
-        const data = readData()
+        const data = readData(req.params.category)
         const updatedTasks = data.map(el => el.taskId === req.params.id ? {...el, status: req.body.status} : el)
-        writeData(updatedTasks)
+        fs.writeFileSync(`./tasks/${req.params.category}.json`, JSON.stringify(updatedTasks, null, 2))
         res.json(updatedTasks)
     } else {
         res.status(501).json({'status': "error", 'message': "incorrect status"})
