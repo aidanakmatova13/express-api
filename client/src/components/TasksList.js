@@ -3,10 +3,10 @@ import axios from 'axios'
 
 const TasksList = () => {
     const [tasks, setTasks] = useState([])
-    useEffect(() =>{
+    useEffect(() => {
         axios("http://localhost:8000/api/tasks")
             .then(({data}) => setTasks(data))
-    },[])
+    }, [])
     return (
         <div className="my-4">
             <ul className="list-group">

@@ -6,7 +6,6 @@ const cors = require('cors')
 require('dotenv').config()  //импортируем dotenv
 
 
-
 //СОЗДАЛИ СЕРВЕР
 const server = express()
 
@@ -18,8 +17,8 @@ mongoose.connect(process.env.MONGO_URL)
 
 
 //ОБРАБОТКА ДАННЫХ В REQ.BODY
-server.use(express.json()) //middleware
-server.use(cors()) //для порта
+server.use(express.json())  //middleware
+server.use(cors())  //для порта
 
 
 //РОУТЫ, КОТОРЫЕ НАЧИНАЮТСЯ С /api/tasks middleware
@@ -38,3 +37,5 @@ server.use((req, res, next) => {
 server.listen(process.env.PORT || 8000, () => {
     console.log('server is running')
 })
+
+
