@@ -9,7 +9,7 @@ const TasksList = () => {
     },[])
     return (
         <div className="my-4">
-            <ul className="list-group" key={tasks.id}>
+            <ul className="list-group">
                 {
                     tasks.map(el =>
                         <li key={el.id} className="list-group-item">{el.title}</li>
